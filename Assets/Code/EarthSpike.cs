@@ -14,7 +14,7 @@ public class EarthSpike : MonoBehaviour
     void Start()
     {
 
-        lifeTime = Time.time + 5f;
+        lifeTime = Time.time + 2f;
         
     }
 
@@ -24,8 +24,10 @@ public class EarthSpike : MonoBehaviour
 
         currentPosition.x = startingPosition.x;
         currentPosition.z = startingPosition.z;
-        currentPosition.y = currentPosition.y + 0 * Time.deltaTime;
-
+        if (currentPosition.y < 1.8)
+        {
+            currentPosition.y = currentPosition.y + 35 * Time.deltaTime;
+        }
         transform.position = new Vector3(currentPosition.x, currentPosition.y,currentPosition.z);
         
         
@@ -38,14 +40,20 @@ public class EarthSpike : MonoBehaviour
 
     public void StartingPosition(Vector3 startingPos)
     {
-        startingPosition.y = startingPos.y - 5f;
+        currentPosition.y = startingPos.y - 5f;
 
         startingPosition.x = startingPos.x;
 
         startingPosition.z = startingPos.z;
+
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        collision.collider.gameObject.GetComponent<EnemyMove>().health = collision.collider.gameObject.GetComponent<EnemyMove>().health - 30;
+        
+        if(other.tag =="Enemy")
+        {
+            other.gameObject.GetComponent<EnemyMove>().health = other.gameObject.GetComponent<EnemyMove>().health - 30;
+        }
+        
     }
 }

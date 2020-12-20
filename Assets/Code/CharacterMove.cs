@@ -19,6 +19,8 @@ public class CharacterMove : MonoBehaviour
 
     public Vector3 spawnPos;
 
+    float abilityReady;
+
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +30,8 @@ public class CharacterMove : MonoBehaviour
         anim = gameObject.GetComponent<Animation>();
 
         isAlive = true;
+
+        abilityReady = 0f;
     }
 
     // Update is called once per frame
@@ -97,32 +101,29 @@ public class CharacterMove : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (scrollPickUp)
         {
-            RaycastHit hit;
-
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
+            if (Time.time > abilityReady)
             {
-                //    if (hit.collider.gameObject.name == "Enemy1")
-                //  {
-                Debug.Log("CoolDown");
+                if (Input.GetMouseButtonDown(0))
+                {
+                    RaycastHit hit;
 
-                spawnPos = hit.point;
-                Spike.GetComponent<EarthSpike>().StartingPosition(spawnPos);
+                    if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
+                    {
+                        //    if (hit.collider.gameObject.name == "Enemy1")
+                        //  {
+                        Debug.Log("CoolDown");
 
-                Instantiate(Spike);
+                        spawnPos = hit.point;
+                        Spike.GetComponent<EarthSpike>().StartingPosition(spawnPos);
 
-                
+                        Instantiate(Spike);
 
-                
+                        abilityReady = Time.time + 5f;
 
-                //         this.gameObject.GetComponent<AttackEnemy>().targetedEnemy = hit.collider.gameObject;
-
-                //           agent.SetDestination(hit.point);
-
-                //       Quaternion lookAt = Quaternion.LookRotation(hit.point - transform.position);
-                //       }
-
+                    }
+                }
             }
         }
     }

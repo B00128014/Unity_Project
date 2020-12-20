@@ -45,24 +45,6 @@ public class AttackEnemy : MonoBehaviour
                 this.gameObject.GetComponent<CharacterMove>().isAttacking = true;
 
                 Quaternion lookAt = Quaternion.LookRotation(targetedEnemy.transform.position);
-
-                if (Time.time > abilityReady)
-                {
-                    if (Input.GetMouseButtonDown(0))
-                    //if player clicks the right mouse button
-                    {
-                        RaycastHit hit;
-                        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
-                        {
-
-                            Debug.Log("Cooldown");
-
-                            abilityReady = Time.time + coolDown;
-
-                            Instantiate(Prefab, hit.point, Quaternion.identity);
-                        }
-                    }
-                }
             }
             else
             {

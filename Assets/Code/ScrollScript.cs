@@ -28,6 +28,7 @@ public class ScrollScript : MonoBehaviour
             //is the player gets closer to the scroll than the destroyDistance, the player will pick up the scroll, and the game object will be destroyed
         {
             player.GetComponent<CharacterMove>().scrollPickUp = true;
+            player.GetComponentInChildren<Canvas>().GetComponent<Instructions>().setScrollActive();
             Destroy(this.gameObject);
         }
 
